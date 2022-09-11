@@ -14,13 +14,13 @@ export default class DatabinDing extends Component {
     //! thẻ mở luôn năm chung hàng với lệnh return
     //! nếu muốn xuống dòng thì dùng dấu () => ở lệnh return của render()
     return <div className="card">
-        <img src={this.foodInfo.picture} className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title">{this.foodInfo.name}</h5>
-          <p className="card-text">{this.foodInfo.price} $</p>
-        </div>
+      <img src={this.foodInfo.picture} className="card-img-top" alt="..." />
+      <div className="card-body">
+        <h5 className="card-title">{this.foodInfo.name}</h5>
+        <p className="card-text">{this.foodInfo.price}$</p>
       </div>
-   
+    </div>
+
   }
 
 
@@ -38,14 +38,15 @@ export default class DatabinDing extends Component {
             <img src={this.foodInfo.picture} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{this.foodInfo.name}</h5>
-              <p className="card-text">{this.foodInfo.price} $</p>
+              <p className="card-text">{this.foodInfo.price}$</p>
             </div>
           </div>
-        </div>
-        <div className="col-4">
+          </div>
           {/* binding hàm có return UI, giá trị tính toán */}
-         {this.renderFood()}
-        </div>
+          <div className="col-4">
+            {this.renderFood()}
+          </div>
+       
       </div>
     )
   }

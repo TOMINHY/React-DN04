@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
 
-    {/* <DemoState/> */}
+    <DemoState/>
 
 
     {/* <HandlEvent/> */}
@@ -22,7 +22,7 @@ function App() {
       {/*component*/}
         {/* <CardRCC/> */}
         {/* <CardRFC/> */}
-    <HomeComponent/>
+    {/* <HomeComponent/> */}
     </div>
   );
 }
