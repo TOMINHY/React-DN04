@@ -28,8 +28,11 @@ export default class DemoState extends Component {
 
             //Xét giá trị mới cho isLogin(state) và renderlại UI
             this.setState({
+                //tham số thứ 2 của setState giúp xử lý các nghiệp vụ sau khi state đã được thay đổi
                 isLogin: true
             })
+           // this.setState({giá trị mới của state},{callbalck function})
+           //nếu đặt clg bên dưới state sẽ bị sai kết quả thông báo do bất đồng bộ dữ liệu
         }} className='btn btn-success'>Login</button>
     }
 
