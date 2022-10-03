@@ -13,6 +13,10 @@ import DemoArray from './DemoArray/DemoArray';
 import DemoProps from './DemoProps/DemoProps';
 import ShoesShop from './DemoProps/ShoesShop/ShoesShop';
 import BTXemChiTiet from './BTXemChiTiet/BTXemChiTiet';
+import BTGioHang from './BTGioHang/BTGioHang';
+import BTGioHangRedux from './BTGioHangRedux/BTGioHangRedux';
+import GameTaiXiu from './GameTaiXiu/GameTaiXiu';
+import BTQLND from './BTQLND/BTQLND';
 //App là Component chính của ứng dựng
 //chứa các thành phần component con
 function App() {
@@ -21,21 +25,23 @@ function App() {
   return (
     <div className="App">
 
-      <BTXemChiTiet/>
+      <BTQLND/>
+      {/* <GameTaiXiu/> */}
 
+      {/* <BTGioHangRedux/> */}
+
+    {/* <BTGioHang/> */}
+
+
+
+      {/* <BTXemChiTiet/> */}
     {/* <ShoesShop/> */}
-
       {/* <DemoProps/> */}
-
       {/* <DemoArray/> */}
-
       {/* <DoiMauXe/> */}
-
       {/* <p className='demoCSS'>demoStyling</p>
     <DemoStyling/>  */}
-
       {/* <TangGiamFont/> */}
-
       {/* <DemoState/> */}
       {/* <HandlEvent/> */}
       {/* <DatabinDing/> */}

@@ -28,7 +28,7 @@ export default class BTXemChiTiet extends Component {
         let {chiTietPhone} = this.state;
         return (
             <div className='container' >
-              <DanhSachSP phoneList={this.phoneList}/>
+              <DanhSachSP showDetail={this.showDetail} phoneList={this.phoneList}/>
                <BangCT chiTietPhone={chiTietPhone}/>
             </div>
         )
