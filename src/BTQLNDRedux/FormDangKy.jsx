@@ -1,51 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-//C1: lưu giá trị từ form ở state của component
 //C2: lưu giá trị từ form ở redux
 
 class FormDangKy extends Component {
 
-  //chứa giá trị tử form, chứa nội dung error
-  state = {
-    values: {
-      taiKhoan: '',
-      hoTen: '',
-      matKhau: '',
-      sdt: '',
-      email: '',
-      maLoaiND: 'khachHàng'
-    },
-    errors: {
-      taiKhoan: '',
-      hoTen: '',
-      matKhau: '',
-      sdt: '',
-      email: '',
-      maLoaiND: ''
-    }
-  }
-
-  // valueForm = {}
-
   inputChange = (event) => {
-    // console.log(event.target);
-    // console.log(event.target.value, event.target.name);
     let { value, name } = event.target;
     // object literal
-    // tổ chức lưu dữ liệu từ state
-    let newValue = { ...this.state.values, [name]: value }
+    let newValue = { ...this.props.nguoiDung.values, [name]: value }
     // console.log(newValue);
 
-    let newErros = { ...this.state.errors }
+    let newErros = { ...this.props.nguoiDung.errors }
     let errorsMsg = '';
     if (value.trim() == '') {
       // lỗi 
       errorsMsg = name + ' không để trống!'
     }
-
     // Kiểm tra email
-    // Lấy giá trị của typeInput
+    // Lấy giá trị của typeinput
     let typeVal = event.target.getAttribute('typeinput');
     if (typeVal == 'email') {
       // kiểm tra email
@@ -56,16 +29,18 @@ class FormDangKy extends Component {
         errorsMsg = 'Email không đúng định dạng !'
       }
     }
-
-
     //object.tenThuocTinh , object[tenThuocTinh]
     newErros[name] = errorsMsg
 
-    this.setState({
-      values: newValue,
-      errors: newErros
-    })
-
+    //đẩy giá trị từ form và thông báo lỗi về redux
+    let action = {
+      type:'HANDLE_CHANGE',
+      nguoiDung:{
+        values: newValue,
+        errors:newErros
+      }
+    }
+    this.props.dispatch(action)
   }
 
   hanldeSubmit = (event) => {
@@ -73,8 +48,8 @@ class FormDangKy extends Component {
     let isValid = true;
     //Kiểm tra các lỗi còn không
     //key: tên thuộc tính 
-    for (const key in this.state.errors) {
-      if (this.state.errors[key] !== '') {
+    for (const key in this.props.nguoiDung.errors) {
+      if (this.props.nguoiDung.errors[key] !== '') {
         // còn lỗi 
         isValid = false;
         //dừng duyệt đối tượng
@@ -83,8 +58,8 @@ class FormDangKy extends Component {
     }
 
     // kiểm tra dữ liệu rỗng khi không change Value
-    for (const key in this.state.values) {
-      if (this.state.values[key] === '') {
+    for (const key in this.props.nguoiDung.values) {
+      if (this.props.nguoiDung.values[key] === '') {
         // giá trị rỗng  
         isValid = false;
         //dừng duyệt đối tượng
@@ -101,40 +76,14 @@ class FormDangKy extends Component {
     //Đẩy dữ liệu người dùng lên redux
     let action = {
       type: 'THEM_ND',
-      nguoiDung: this.state.values
+      nguoiDung: this.props.nguoiDung.values
     }
     this.props.dispatch(action)
   }
 
-  // static getDerivedStateFromProps(newProps, currentState) {
-  //   // xử lý các code trước khi render UI
-  //   // trường hợp chỉnh sửa gõ trên form thì cần đổi state của component => lấy this.state
-  //   // trường hợp xem thôngg tin thì lên redux lấy nguoiDungChiTiet về lưu vào props
-  //   //=> đem từ props lưu vào trong state 
-  //   console.log('newProps', newProps)
-  //   console.log('currentState', currentState)
-  //   if (newProps.nguoiDungChiTiet.taiKhoan !== currentState.values.taiKhoan) {
-  //     //? cần xem thông tin chi tiết
-  //     return {
-  //       ...currentState,
-  //       values: newProps.nguoiDungChiTiet // lấy nguoiDungChiTiet lưu vào state
-  //     }
-  //   }
-  //   //? ngược lại , cập nhật người dùng
-  //   return currentState; // lấy dữ liệu từ từ form onChange lưu vào state (inputChange)
-  // }
-
-  componentWillReceiveProps(newProps){
-    // chỉ chạy khi props thay đổi => xem chi tiết 
-    this.setState({
-      values: newProps.nguoiDungChiTiet
-    })
-  }
-
   render() {
     console.log(this.props)
-    // let {taiKhoan,hoTen} = this.props.nguoiDungChiTiet
-    let { taiKhoan, hoTen } = this.state.values
+    let {taiKhoan,hoTen,matKhau,sdt,email,maLoaiND} = this.props.nguoiDung.values
     return (
       <div className='py-5'>
         <form onSubmit={(event) => {
@@ -145,44 +94,50 @@ class FormDangKy extends Component {
               <input onChange={(event) => {
                 this.inputChange(event)
               }} value={taiKhoan} type="text" name='taiKhoan' className="form-control" placeholder="Tài Khoản" />
-              <p className='text-danger'>{this.state.errors.taiKhoan}</p>
+              <p className='text-danger'>{this.props.nguoiDung.errors.taiKhoan}</p>
             </div>
             <div className="col-6 mb-5">
               <input onChange={(event) => {
                 this.inputChange(event)
               }} value={hoTen} type="text" name='hoTen' className="form-control" placeholder="Họ Tên" />
-              <p className='text-danger'>{this.state.errors.hoTen}</p>
+              <p className='text-danger'>{this.props.nguoiDung.errors.hoTen}</p>
             </div>
             <div className="col-6 mb-5">
               <input onChange={(event) => {
                 this.inputChange(event)
-              }} type="password" name='matKhau' className="form-control" placeholder="Mật Khẩu" />
-              <p className='text-danger'>{this.state.errors.matKhau}</p>
+              }} value={matKhau} type="password" name='matKhau' className="form-control" placeholder="Mật Khẩu" />
+              <p className='text-danger'>{this.props.nguoiDung.errors.matKhau}</p>
             </div>
             <div className="col-6 mb-5">
               <input onChange={(event) => {
                 this.inputChange(event)
-              }} type="text" name='sdt' className="form-control" placeholder="Số Điện Thoại" />
-              <p className='text-danger'>{this.state.errors.sdt}</p>
+              }} value={sdt} type="text" name='sdt' className="form-control" placeholder="Số Điện Thoại" />
+              <p className='text-danger'>{this.props.nguoiDung.errors.sdt}</p>
             </div>
             <div className="col-6 mb-5">
               <input onChange={(event) => {
                 this.inputChange(event)
-              }} typeinput="email" type="text" name='email' className="form-control" placeholder="Email" />
-              <p className='text-danger'>{this.state.errors.email}</p>
+              }} value={email} typeinput="email" type="text" name='email' className="form-control" placeholder="Email" />
+              <p className='text-danger'>{this.props.nguoiDung.errors.email}</p>
             </div>
             <div className="col-6 mb-5">
-              <select onChange={(event) => {
+              <select value={maLoaiND} onChange={(event) => {
                 this.inputChange(event)
-              }} className="form-control" name="maLoaiND">
+              }}  className="form-control" name="maLoaiND">
                 <option value="khachHang">Khách Hàng</option>
                 <option value="quanTri">Quản Trị Viên</option>
               </select>
-              <p className='text-danger'>{this.state.errors.maLoaiND}</p>
+              <p className='text-danger'>{this.props.nguoiDung.errors.maLoaiND}</p>
             </div>
             <div className="col-12 text-center">
               <button className='btn btn-success mr-5'>Đăng Ký</button>
-              <button className='btn btn-info'>Cập Nhật</button>
+              <button type='button' onClick={()=>{
+                let action ={
+                  type:'CAP_NHAT',
+                  nguoiDungCapNhat:this.props.nguoiDung.values
+                }
+                this.props.dispatch(action)
+              }} className='btn btn-info'>Cập Nhật</button>
             </div>
           </div>
         </form>
@@ -194,7 +149,7 @@ class FormDangKy extends Component {
 
 const mapStateToProps = (rootReducer) => {
   return {
-    nguoiDungChiTiet: rootReducer.QLNDReducer.nguoiDungChiTiet
+    nguoiDung: rootReducer.QLNDReducer.nguoiDung
   }
 }
 

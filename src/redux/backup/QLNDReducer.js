@@ -24,8 +24,8 @@ export const QLNDReducer = (state = initialState, action) => {
             // copy mảng cũ sang mảng mới và thêm phần tử cho mảng 
             // => lưu mảng mới vào lại biến mảng cũ 
             state.mangND = [...state.mangND, action.nguoiDung]
-            return { ...state }
 
+            return { ...state }
         case 'XOA_ND':
             // console.log(action.taiKhoanXoa);
             //lọc mảng chỉ giữ lại các tài khoản không xóa
@@ -35,11 +35,11 @@ export const QLNDReducer = (state = initialState, action) => {
             })
             return { ...state }
 
+
         case 'XEM_CT':
             console.log(action.ndChiTiet)
             state.nguoiDungChiTiet = action.ndChiTiet
             return { ...state }
-            
         default:
             return state
     }

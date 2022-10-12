@@ -29,7 +29,7 @@ class TableNguoiDung extends Component {
               ndChiTiet:nd
             }
             this.props.dispatch(action)
-          }} className='btn btn-info'>Xem Thông Tin</button>
+          }} className='btn btn-info'>Xem</button>
         </td>
       </tr>
     })
